@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 import { chart as baseChart, tooltip, config } from "lotivis-chart";
+import { colorSchemeDefault, ColorsGenerator } from "lotivis-colors";
 import { legend } from "./legend.js";
 import { DEFAULT_DATE_ORDINATOR } from "./date.ordinator.js";
-import { colorSchemeDefault, ColorsGenerator } from "./colors.js";
 
 function transX(x) {
   return "translate(" + x + ",0)";
@@ -39,6 +39,8 @@ function safeId(id) {
  *
  */
 export function bar() {
+  console.log("config", config);
+
   let attr = {
     // a unique id for this chart
     id: "bar-" + new Date().getTime(),
@@ -547,7 +549,7 @@ export function bar() {
 
     dv.data = dc.data();
     dv.snapshot = dc.snapshot();
-    dv.dates = dc.dates();
+    dv.dates = dv.data.dates;
     dv.groups = dv.snapshot.groups;
     dv.labels = dv.snapshot.labels;
     dv.enabledGroups = dv.snapshot.groups;

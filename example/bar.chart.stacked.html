@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="./examples.css" />
+    <title>BarChart - Grouped</title>
+  </head>
+  <body>
+    <div class="ltv-container">
+      <h1>BarChart</h1>
+      <div id="bar">
+        <!-- Bar Chart Code Here -->
+      </div>
+      <div id="ltv-data">
+        <!-- legend here -->
+      </div>
+    </div>
+
+    <script src="../node_modules/lotivis/dist/lotivis.js"></script>
+
+    <script>
+      let datasets = [
+        {
+          label: "dataset_1",
+          group: "group_1",
+          data: [
+            {
+              location: 1,
+              date: 2000,
+              value: 0,
+            },
+            {
+              location: 1,
+              date: 2001,
+              value: 1,
+            },
+            {
+              location: 1,
+              date: 2002,
+              value: 2,
+            },
+            {
+              location: 1,
+              date: 2003,
+              value: 3,
+            },
+            {
+              location: 1,
+              date: 2004,
+              value: 4,
+            },
+            {
+              location: 2,
+              date: 2000,
+              value: 2,
+            },
+            {
+              location: 2,
+              date: 2001,
+              value: 3,
+            },
+            {
+              location: 2,
+              date: 2002,
+              value: 4,
+            },
+            {
+              location: 2,
+              date: 2003,
+              value: 5,
+            },
+            {
+              location: 2,
+              date: 2004,
+              value: 6,
+            },
+          ],
+        },
+        {
+          label: "dataset_1_1",
+          group: "group_1",
+          data: [
+            {
+              location: 1,
+              date: 2000,
+              value: 8,
+            },
+            {
+              location: 1,
+              date: 2001,
+              value: 6,
+            },
+            {
+              location: 1,
+              date: 2002,
+              value: 4,
+            },
+            {
+              location: 1,
+              date: 2003,
+              value: 2,
+            },
+            {
+              location: 1,
+              date: 2004,
+              value: 0,
+            },
+          ],
+        },
+        {
+          label: "dataset_2",
+          group: "dataset_2, dataset_3",
+          data: [
+            {
+              location: 1,
+              date: 2000,
+              value: 5,
+            },
+            {
+              location: 1,
+              date: 2001,
+              value: 5,
+            },
+            {
+              location: 1,
+              date: 2002,
+              value: 5,
+            },
+            {
+              location: 1,
+              date: 2003,
+              value: 5,
+            },
+            {
+              location: 1,
+              date: 2004,
+              value: 5,
+            },
+            {
+              location: 2,
+              date: 2000,
+              value: 8,
+            },
+            {
+              location: 2,
+              date: 2001,
+              value: 7,
+            },
+            {
+              location: 2,
+              date: 2002,
+              value: 6,
+            },
+            {
+              location: 2,
+              date: 2003,
+              value: 5,
+            },
+            {
+              location: 2,
+              date: 2004,
+              value: 4,
+            },
+          ],
+        },
+        {
+          label: "dataset_3",
+          group: "dataset_2, dataset_3",
+          data: [
+            {
+              location: 1,
+              date: 2000,
+              value: 5,
+            },
+            {
+              location: 1,
+              date: 2001,
+              value: 4,
+            },
+            {
+              location: 1,
+              date: 2002,
+              value: 3,
+            },
+            {
+              location: 1,
+              date: 2003,
+              value: 2,
+            },
+            {
+              location: 1,
+              date: 2004,
+              value: 1,
+            },
+            {
+              location: 2,
+              date: 2000,
+              value: 5,
+            },
+            {
+              location: 2,
+              date: 2001,
+              value: 6,
+            },
+            {
+              location: 2,
+              date: 2002,
+              value: 7,
+            },
+            {
+              location: 2,
+              date: 2003,
+              value: 8,
+            },
+            {
+              location: 2,
+              date: 2004,
+              value: 9,
+            },
+          ],
+        },
+      ];
+
+      let data = lotivis.datasetsToData(datasets);
+      let dataController = lotivis.dataController(data);
+
+      lotivis
+        .bar()
+        .selector("#bar")
+        .enabled(false)
+        .labels(true)
+        .dataController(dataController)
+        .run();
+
+      // lotivis
+      //     .legend()
+      //     .selector("#legend")
+      //     .title("Legend")
+      //     .dataController(dataController)
+      //     .run();
+    </script>
+  </body>
+</html>

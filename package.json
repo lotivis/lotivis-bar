@@ -21,16 +21,19 @@
     "build": "rollup --config",
     "build:watch": "rollup --config --watch",
     "test": "mocha test/**/*-test.js",
-    "test:watch": "mocha test/**/*-test.js --watch"
+    "test:watch": "mocha test/**/*-test.js --watch",
+    "serve": "http-server"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.3.0",
     "mocha": "^10.0.0",
     "rollup": "^2.76.0",
-    "rollup-plugin-terser": "7"
+    "rollup-plugin-terser": "7",
+    "http-server": "14"
   },
   "dependencies": {
+    "d3": "7",
     "lotivis-chart": "1",
-    "d3": "7"
+    "lotivis-colors": "1"
   }
 }

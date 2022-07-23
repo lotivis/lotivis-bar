@@ -18,7 +18,7 @@ let barChart = lotivis.bar();
 
 ## API Reference
 
-## Development`
+## Development
 
 ```bash
 # build module

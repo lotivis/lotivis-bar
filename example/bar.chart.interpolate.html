@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+    />
+
+    <link rel="stylesheet" href="./examples.css" />
+    <style>
+      .ltv-datatext-pre {
+        counter-reset: line;
+      }
+
+      .ltv-datatext-code:before {
+        counter-increment: line;
+        content: counter(line);
+        display: inline-block;
+        border-right: 1px solid #ddd;
+        text-align: end;
+        padding: 0 0.5em;
+        margin-right: 0.5em;
+        min-width: 30px;
+        color: #888;
+
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+      }
+    </style>
+    <title>BarChart</title>
+  </head>
+  <body>
+    <div class="ltv-container">
+      <h1>BarChart Interpoltate Dates</h1>
+      <div id="bar-chart">
+        <!-- Bar Chart Code Here -->
+      </div>
+      <div id="data-text">
+        <!-- data text here -->
+      </div>
+    </div>
+
+    <script src="../node_modules/lotivis/dist/lotivis.js"></script>
+
+    <script>
+      // enable debug messages
+      lotivis.debug(true);
+
+      let data = lotivis.datasetToData({
+        label: "dataset_1",
+        data: [
+          {
+            date: 2001,
+            value: 1,
+          },
+          {
+            date: 2003,
+            value: 3,
+          },
+        ],
+      });
+      let dc = lotivis.dataController(data);
+
+      let chart = lotivis
+        .bar()
+        .selector("#bar-chart")
+        .dates([2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007])
+        .dataController(dc)
+        .run();
+
+      let text = lotivis
+        .datatext()
+        .selector("#data-text")
+        .dataController(dc)
+        .run();
+    </script>
+  </body>
+</html>

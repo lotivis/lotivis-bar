@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 import { chart as baseChart, config } from "lotivis-chart";
-import { colorSchemeDefault, ColorsGenerator } from "./colors.js";
+import { colorSchemeDefault, ColorsGenerator } from "lotivis-colors";
 
 export const legendLabelFormat = function (l, v, i) {
   return `${l} (${v})`;

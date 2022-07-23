@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+    />
+    <link rel="stylesheet" href="./examples.css" />
+    <title>BarChart</title>
+  </head>
+  <body>
+    <div class="ltv-container">
+      <h1>Bar Chart</h1>
+      <div id="bar-chart">
+        <!-- BarChart Here -->
+      </div>
+      <div id="data-text">
+        <!-- DataText Here -->
+      </div>
+    </div>
+
+    <script src="../node_modules/lotivis/dist/lotivis.js"></script>
+
+    <script>
+      console.log("lotivis", lotivis);
+
+      // lotivis.debug(true);
+
+      let datasets = [
+        {
+          label: "dataset_1",
+          data: [
+            {
+              date: 2000,
+              value: 0,
+            },
+            {
+              date: 2001,
+              value: 1,
+            },
+            {
+              date: 2002,
+              value: 2,
+            },
+            {
+              date: 2003,
+              value: 3,
+            },
+            {
+              date: 2004,
+              value: 4,
+            },
+          ],
+        },
+      ];
+
+      let data = lotivis.datasetsToData(datasets);
+      let dc = lotivis.dataController(data);
+
+      let barChart = lotivis
+        .bar()
+        .selector("#bar-chart")
+        .marginLeft(40)
+        .width(1000)
+        .height(500)
+        .dataController(dc)
+        .run();
+
+      // let legend = lotivis
+      //     .legend()
+      //     .selector("#legend")
+      //     .dataController(dc)
+      //     .run();
+
+      // let dataCSV = lotivis
+      //   .datatext()
+      //   .selector("#data-text")
+      //   // .text("csv")
+      //   .dataController(dc)
+      //   .run();
+
+      // lotivis
+      //     .jsonFlat("./assets/gen.2.group.json")
+      //     .then((dc) => {
+      //         barChart.dataController(dc).run();
+      //         dataJSON.dataController(dc).run();
+      //         dataCSV.dataController(dc).run();
+      //     })
+      //     .catch(alert);
+    </script>
+  </body>
+</html>
