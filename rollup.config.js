@@ -1,5 +1,6 @@
 import { terser } from "rollup-plugin-terser";
 import nodeResolve from "@rollup/plugin-node-resolve";
+import postcss from "rollup-plugin-postcss";
 import * as meta from "./package.json";
 
 const copyright = "Lukas Danckwerth";
@@ -15,7 +16,12 @@ const config = {
     extend: true,
     banner: `// ${meta.name} v${meta.version} Copyright ${copyright}`,
   },
-  plugins: [nodeResolve()],
+  plugins: [
+    nodeResolve(),
+    postcss({
+      plugins: [],
+    }),
+  ],
   onwarn(message, warn) {
     if (message.code === "CIRCULAR_DEPENDENCY") return;
     warn(message);

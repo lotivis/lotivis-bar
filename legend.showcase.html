@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+    />
+
+    <link rel="stylesheet" href="./examples.css" />
+    <title>Lotivis Examples - Legend Showcase</title>
+    <style>
+      div {
+        vertical-align: top;
+      }
+
+      .color-scale {
+        width: 200px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ltv-container">
+      <h1>Legend Showcase</h1>
+      <div id="legend-sections-labels">
+        <!-- legend-group-labels here -->
+      </div>
+      <div id="legend-sections-groups">
+        <!-- legend-group-groups here -->
+      </div>
+      <div id="legend-labels">
+        <!-- legend-labels here -->
+      </div>
+      <div id="legend-groups">
+        <!-- legend-groups here -->
+      </div>
+
+      <h1>Colors Showcase</h1>
+      <div style="vertical-align: top">
+        <div id="colors-1" class="color-scale">
+          <!-- colors-1 here -->
+        </div>
+        <div id="colors-2" class="color-scale">
+          <!-- colors-2 here -->
+        </div>
+        <div id="colors-3" class="color-scale">
+          <!-- colors-3 here -->
+        </div>
+        <div id="colors-4" class="color-scale">
+          <!-- colors-4 here -->
+        </div>
+      </div>
+    </div>
+
+    <script src="../node_modules/lotivis/dist/lotivis.js"></script>
+
+    <script>
+      lotivis.debug(true);
+      lotivis.config.downloadFilePrefix = "frcv";
+
+      function fillColorScale(id, colorScheme) {
+        lotivis.d3
+          .select("#" + id)
+          .selectAll("div")
+          .data(colorScheme)
+          .enter()
+          .append("div")
+          .style("background", (d) => d)
+          .style("padding", "3px")
+          .style("margin-bottom", "2px")
+          .text((d) => "" + d);
+      }
+
+      fillColorScale("colors-1", lotivis.colorSchemeCategory10);
+      fillColorScale("colors-2", lotivis.colorSchemeTableau10);
+      fillColorScale("colors-3", lotivis.colorSchemeLotivis10);
+
+      let legendGroupLabels = lotivis
+        .legend()
+        .selector("#legend-sections-labels")
+        .labelFormat((l) => l)
+        .sections(true)
+        .title((d) => d.selector().replace("#", ""));
+
+      let legendGroupGroups = lotivis
+        .legend()
+        .selector("#legend-sections-groups")
+        .sections(true)
+        .groups(true)
+        .title((d) => d.selector().replace("#", ""));
+
+      let legendLabels = lotivis
+        .legend()
+        .selector("#legend-labels")
+        .labelFormat(null)
+        .sections(false)
+        .groups(false)
+        .title((d) => d.selector().replace("#", ""));
+
+      let legendGroups = lotivis
+        .legend()
+        .selector("#legend-groups")
+        .sections(false)
+        .groups(true)
+        .title((d) => d.selector().replace("#", ""));
+
+      lotivis
+        .jsonFlat("./assets/generated.sample.json")
+        .then((dc) => {
+          legendGroupLabels.dataController(dc).run();
+          legendGroupGroups.dataController(dc).run();
+          legendLabels.dataController(dc).run();
+          legendGroups.dataController(dc).run();
+        })
+        .catch(console.error);
+    </script>
+  </body>
+</html>

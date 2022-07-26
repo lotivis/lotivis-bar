@@ -39,8 +39,6 @@ function safeId(id) {
  *
  */
 export function bar() {
-  console.log("config", config);
-
   let attr = {
     // a unique id for this chart
     id: "bar-" + new Date().getTime(),
@@ -185,7 +183,7 @@ export function bar() {
       .attr("fill", attr.backgroundColor)
       .on("click", (e, l) => {
         if (!attr.enabled) return;
-        attr.dataController.clear("dates", chart);
+        attr.dataController.clearFilters(chart, "dates");
         calc.svg
           .selectAll(`.ltv-bar-chart-selection-rect`)
           .attr(`opacity`, (d) =>

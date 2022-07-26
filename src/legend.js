@@ -156,25 +156,25 @@ export function legend() {
 
     var dv = {};
     dv.data = dc.data();
-    dv.labels = dc.labels();
-    dv.groups = dc.groups();
-    dv.locations = dc.locations();
-    dv.dates = dc.dates();
+    dv.labels = dv.data.labels;
+    dv.groups = dv.data.groups;
+    dv.locations = dv.data.locations;
+    dv.dates = dv.data.dates;
 
     dv.byLabel = d3.rollup(
-      dc.data(),
+      dv.data,
       (v) => d3.sum(v, (d) => d.value),
       (d) => d.label
     );
 
     dv.byGroup = d3.rollup(
-      dc.data(),
+      dv.data,
       (v) => d3.sum(v, (d) => d.value),
       (d) => d.group || d.label
     );
 
     dv.byGroupLabel = d3.rollup(
-      dc.data(),
+      dv.data,
       (v) => d3.sum(v, (d) => d.value),
       (d) => d.group || d.label,
       (d) => d.label
@@ -220,7 +220,8 @@ export function legend() {
       .selectAll(".div")
       .data(isSections() ? dv.groups : [""]) // use single group when mode is not "groups"
       .enter()
-      .div("ltv-legend-group")
+      .append("div")
+      .classed("ltv-legend-group", true)
       .style("color", (s) => calc.colors.group(s));
 
     // draw titles only in "sections" mode
