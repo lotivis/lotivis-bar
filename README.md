@@ -1,4 +1,4 @@
-# lotivis-bar
+# lotivis-bar [![Node.js CI Build](https://github.com/lotivis/lotivis-bar/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/lotivis/lotivis-bar/actions/workflows/node.js.yml)
 
 The lotivis.js bar chart.
 
