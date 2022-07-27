@@ -1735,10 +1735,10 @@ log-symbols@4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
-lotivis-chart@1:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/lotivis-chart/-/lotivis-chart-1.0.5.tgz#0540957844b2108cd90b626e94f664655611b4df"
-  integrity sha512-JFwJ9lixCQfGNQUJjq3benOcWbuuxVT7qqT+qswY2kAAiOAYk6dAGoAUJg2M/fefLonW0BW/0+vtnxwKW7bIDQ==
+lotivis-chart@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/lotivis-chart/-/lotivis-chart-1.0.8.tgz#f2e5ea272dcf53b0e04255692df630ad1b847e80"
+  integrity sha512-qVAhG4EHcWCZelz/AXwkK6UOlIftdoIGQDJuwiPVcjUEjzWFrmOknBTOHFpiaxGR6oBUgjX1IYIGPsIQ5yz02Q==
   dependencies:
     d3 "7"
     lotivis-data "1"
