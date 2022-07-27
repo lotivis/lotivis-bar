@@ -21,7 +21,8 @@
     "build": "rollup --config",
     "build:watch": "rollup --config --watch",
     "serve": "http-server",
-    "dev": "yarn serve & yarn build:watch"
+    "dev": "yarn build:watch & yarn serve",
+    "pre:publish": "rm -rf dist && yarn test && yarn build"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "13",

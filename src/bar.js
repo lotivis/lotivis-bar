@@ -49,17 +49,26 @@ export function bar() {
     // the charts title
     title: "BarChart",
 
+    // top margin of title
+    titleMarginTop: 20,
+
     // the width of the chart's svg
     width: 1000,
 
     // the height of the chart's svg
     height: 600,
 
-    // margin
-    marginLeft: 20,
-    marginTop: 20,
-    marginRight: 20,
-    marginBottom: 20,
+    // left margin
+    marginLeft: config.defaultMargin,
+
+    // top margin
+    marginTop: config.defaultMargin,
+
+    // right margin
+    marginRight: config.defaultMargin,
+
+    // bottom margin
+    marginBottom: config.defaultMargin,
 
     // corner radius of bars
     radius: config.barRadius,
@@ -76,11 +85,11 @@ export function bar() {
     // the legend object
     legend: legend(),
 
-    // whether to draw the x-grid
-    xAxis: true,
+    // whether to draw the x-grid (dates)
+    xAxis: false,
 
-    // whether to draw the y-grid
-    yAxis: false,
+    // whether to draw the y-grid (values)
+    yAxis: true,
 
     // amount of ticks for the y-axis
     ticks: 10,
@@ -100,6 +109,7 @@ export function bar() {
     // the axis color of the chart
     axisColor: config.chartsAxisColor,
 
+    // the axis with
     axisStrokeWidth: config.chartsAxisStrokeWidth,
 
     // transformes a given date t a numeric value.
@@ -118,14 +128,19 @@ export function bar() {
   // create new underlying chart with specified attributes
   let chart = baseChart(attr);
 
-  /**
-   *
-   * @param {*} calc
-   * @param {*} dv
-   */
+  function elementId(type, date) {
+    return `ltv-bar-chart-${type}-${safeId("" + date)}`;
+  }
+
+  function resetDateFilters(calc) {
+    if (!attr.enabled) return;
+    attr.dataController.clearFilters(chart, "dates");
+    calc.svg.selectAll(`.ltv-bar-chart-selection-rect`).attr(`opacity`, 0);
+    calc.svg.selectAll(".ltv-bar-chart-dates-area").attr(`opacity`, 1);
+  }
+
   function createScales(calc, dv) {
-    // preferre dates from attr if specified. fallback to
-    // dates of data view
+    // preferre dates from attr if specified. fallback to dates of data view
     let dates = Array.isArray(attr.dates) ? attr.dates : dv.dates;
 
     // Sort date according to access function
@@ -166,12 +181,6 @@ export function bar() {
       .attr("viewBox", `0 0 ${attr.width} ${attr.height}`);
   }
 
-  /**
-   * Renders the background rect of the chart.
-   *
-   * @param {calc} calc The calc object.
-   * @private
-   */
   function renderBackground(calc) {
     calc.svg
       .append("rect")
@@ -181,17 +190,7 @@ export function bar() {
       .attr("width", attr.width)
       .attr("height", attr.height)
       .attr("fill", attr.backgroundColor)
-      .on("click", (e, l) => {
-        if (!attr.enabled) return;
-        attr.dataController.clearFilters(chart, "dates");
-        calc.svg
-          .selectAll(`.ltv-bar-chart-selection-rect`)
-          .attr(`opacity`, (d) =>
-            attr.dataController.isFilter("dates", d)
-              ? config.selectionOpacity
-              : 0
-          );
-      });
+      .on("click", () => resetDateFilters(calc));
   }
 
   function renderTitle(calc, dv) {
@@ -200,26 +199,17 @@ export function bar() {
       .attr("class", "ltv-title")
       .attr("text-anchor", "middle")
       .attr("x", calc.graphWidth / 2)
-      .attr("y", 10)
+      .attr("y", attr.titleMarginTop)
       .text(attr.title);
   }
 
-  /**
-   * Renders the axis of the chart.
-   * @param {*} calc The calc obj
-   * @private
-   */
   function renderAxis(calc, dv) {
     // left axis
-    // let leftAxis =
-
-    if (Number.isInteger(attr.ticks)) {
-      calc.axisLeft = calc.svg
-        .append("g")
-        .call(d3.axisLeft(calc.yChart).ticks(attr.ticks))
-        .attr("transform", transX(attr.marginLeft))
-        .attr("class", "ltv-bar-chart-axis-label");
-    }
+    calc.axisLeft = calc.svg
+      .append("g")
+      .call(d3.axisLeft(calc.yChart).ticks(attr.ticks))
+      .attr("transform", transX(attr.marginLeft))
+      .attr("class", "ltv-bar-chart-axis-label");
 
     // bottom axis
     calc.axisBottom = calc.svg
@@ -229,14 +219,10 @@ export function bar() {
       .attr("class", "ltv-bar-chart-axis-label");
   }
 
-  /**
-   * Renders the grid of the chart.
-   * @param {*} calc The calc obj
-   * @private
-   */
   function renderGrid(calc) {
-    if (attr.xAxis && Number.isInteger(attr.ticks)) {
-      let xAxisGrid = d3
+    // values
+    if (attr.yAxis && Number.isInteger(attr.ticks)) {
+      let yAxisGrid = d3
         .axisLeft(calc.yChart)
         .tickSize(-calc.graphWidth)
         .tickFormat("")
@@ -248,11 +234,12 @@ export function bar() {
         .attr("color", attr.axisColor)
         .attr("stroke-width", attr.axisStrokeWidth)
         .attr("transform", transX(attr.marginLeft))
-        .call(xAxisGrid);
+        .call(yAxisGrid);
     }
 
-    if (attr.yAxis) {
-      let yAxisGrid = d3
+    // dates
+    if (attr.xAxis) {
+      let xAxisGrid = d3
         .axisBottom(calc.xChartScale)
         .tickSize(-calc.graphHeight)
         .tickFormat("");
@@ -263,22 +250,18 @@ export function bar() {
         .attr("color", attr.axisColor)
         .attr("stroke-width", attr.axisStrokeWidth)
         .attr("transform", transY(calc.graphBottom))
-        .call(yAxisGrid);
+        .call(xAxisGrid);
     }
   }
 
   function renderSelectionBars(calc, dv) {
-    function rectId(date) {
-      return `ltv-bar-chart-selection-rect-${safeId(String(date))}`;
-    }
-
     calc.selection = calc.svg
       .append("g")
       .selectAll("rect")
       .data(dv.dates)
       .enter()
       .append("rect")
-      .attr("id", (d) => rectId(d))
+      .attr("id", (d) => elementId("selection-rect", d))
       .attr("class", "ltv-bar-chart-selection-rect")
       .attr("x", (d) => calc.xChartScale(d))
       .attr("y", attr.marginTop)
@@ -289,17 +272,13 @@ export function bar() {
   }
 
   function renderHoverBars(calc, dv) {
-    function rectId(date) {
-      return `ltv-bar-chart-hover-bar-${safeId(String(date))}`;
-    }
-
     calc.selection = calc.svg
       .append("g")
       .selectAll("rect")
       .data(dv.dates)
       .enter()
       .append("rect")
-      .attr("id", (d) => rectId(d))
+      .attr("id", (d) => elementId("hover-bar", d))
       .attr("class", "ltv-bar-chart-hover-bar")
       .attr("x", (d) => calc.xChartScale(d))
       .attr("y", attr.marginTop)
@@ -325,11 +304,10 @@ export function bar() {
         left = calc.xChartScalePadding(date);
 
       // differ tooltip position on bar position
-      if (left > attr.width / 2) {
-        left = getXLeft(date, factor, offset, tooltipSize, calc);
-      } else {
-        left = getXRight(date, factor, offset, calc);
-      }
+      left =
+        left > attr.width / 2
+          ? getXLeft(date, factor, offset, tooltipSize, calc)
+          : getXRight(date, factor, offset, calc);
 
       calc.tip
         .html(getHTMLForDate(date, dv, calc))
@@ -357,16 +335,14 @@ export function bar() {
 
       calc.svg
         .selectAll(`.ltv-bar-chart-selection-rect`)
-        .attr(`opacity`, (d) => (dc.isFilter("dates", d) ? 0.3 : 0));
+        .attr(`opacity`, (d) => (dc.isFilter("dates", d) ? 0.05 : 0));
+
+      calc.svg
+        .selectAll(".ltv-bar-chart-dates-area")
+        .attr(`opacity`, (d) => (dc.isFilter("dates", d[0]) ? 0.16 : 1));
     }
   }
 
-  /**
-   * Renders the bars in "combined" style.
-   *
-   * @param {*} calc The calc object
-   * @param {*} dv The data view
-   */
   function renderCombined(calc, dv) {
     calc.svg
       .append("g")
@@ -387,7 +363,8 @@ export function bar() {
       .attr("width", calc.xGroup.bandwidth())
       .attr("height", (d) => calc.graphBottom - calc.yChart(d[1]))
       .attr("pointer-events", "none")
-      .radius(attr.radius)
+      .attr("rx", attr.radius)
+      .attr("ry", attr.radius)
       .raise();
   }
 
