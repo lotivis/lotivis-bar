@@ -1,3 +1,2 @@
-import "./index.scss";
+import "./bar.scss";
 export * from "./bar.js";
-export * from "./legend.js";
