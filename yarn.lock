@@ -1735,6 +1735,14 @@ log-symbols@4.1.0:
     chalk "^4.1.0"
     is-unicode-supported "^0.1.0"
 
+lotivis-chart@1:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/lotivis-chart/-/lotivis-chart-1.0.11.tgz#9340c2d087b07dcb7065a828517bc3ad8d9373d3"
+  integrity sha512-dyiAMYXMqcPk1Y1mTUYzPX+JpXVtpAxX3s9JlGqxIHWblJIhKYtSMURkTSyvArI2A53Yw5qgeHtNmgIrBPeELg==
+  dependencies:
+    d3 "7"
+    lotivis-data "1"
+
 lotivis-chart@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/lotivis-chart/-/lotivis-chart-1.0.8.tgz#f2e5ea272dcf53b0e04255692df630ad1b847e80"
@@ -1766,6 +1774,16 @@ lotivis-datasets@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lotivis-datasets/-/lotivis-datasets-1.0.0.tgz#07e60268d4bd0d070ae4a118452187708aa63b05"
   integrity sha512-mEIcU2kJY2XLIkkxLE7BI4G892X1LH3TLGBj0gusz5olBY01dOhxE157fO7OxQ16iDgcmpThAreUPkbWJF0ttw==
+
+lotivis-legend@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/lotivis-legend/-/lotivis-legend-1.0.0.tgz#4639ca1876aa16bd171891307c736880fc612309"
+  integrity sha512-BqVpkUl1/YSM96RNGiUR0dYDKaRFj6a0Olab6qwl0FVVMEjq9P/yomyLWHuG/0iQHPSRKMcfNMMFdMcTGAZ7OQ==
+  dependencies:
+    d3 "7"
+    lotivis-chart "1"
+    lotivis-colors "1"
+    lotivis-datasets "1"
 
 lru-cache@^6.0.0:
   version "6.0.0"

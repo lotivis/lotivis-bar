@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { chart as baseChart, tooltip, config } from "lotivis-chart";
 import { colorSchemeDefault, ColorsGenerator } from "lotivis-colors";
-import { legend } from "../../lotivis-legend/src/legend.js";
+import { legend } from "lotivis-legend";
 import { DEFAULT_DATE_ORDINATOR } from "./date.ordinator.js";
 
 function transX(x) {
