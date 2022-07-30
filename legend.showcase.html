@@ -60,8 +60,7 @@
       lotivis.config.downloadFilePrefix = "frcv";
 
       function fillColorScale(id, colorScheme) {
-        lotivis.d3
-          .select("#" + id)
+        d3.select("#" + id)
           .selectAll("div")
           .data(colorScheme)
           .enter()
