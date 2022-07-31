@@ -24,6 +24,8 @@ function safeId(id) {
     .join(`-`);
 }
 
+var barChartIndex = 0;
+
 /**
  * Reusable Bar Chart API class that renders ae
  * simple and configurable bar chart.
@@ -41,7 +43,7 @@ function safeId(id) {
 export function bar() {
   let attr = {
     // a unique id for this chart
-    id: "bar-" + new Date().getTime(),
+    id: "bar-" + ++barChartIndex,
 
     // default selector
     selector: "#ltv-bar-chart",
@@ -176,6 +178,7 @@ export function bar() {
   function renderSVG(container, calc) {
     calc.svg = container
       .append("svg")
+      .attr("id", attr.id + "-svg")
       .attr("class", "ltv-chart-svg ltv-bar-chart-svg")
       .attr("preserveAspectRatio", "xMidYMid meet")
       .attr("viewBox", `0 0 ${attr.width} ${attr.height}`);

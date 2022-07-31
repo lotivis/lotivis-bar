@@ -37,9 +37,9 @@
   },
   "dependencies": {
     "d3": "7",
-    "lotivis-chart": "^1.0.8",
+    "lotivis-chart": "1",
     "lotivis-colors": "1",
     "lotivis-datasets": "1",
-    "lotivis-legend": "^1.0.0"
+    "lotivis-legend": "1"
   }
 }
